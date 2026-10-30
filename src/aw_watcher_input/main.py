@@ -1,3 +1,4 @@
+import getpass
 import logging
 from datetime import datetime, timezone
 from time import sleep
@@ -27,7 +28,9 @@ def main(testing: bool, host: Optional[str], port: Optional[int]):
     client.connect()
 
     # Create bucket
-    bucket_name = "{}_{}".format(client.client_name, client.client_hostname)
+    bucket_name = "{}_{}_{}".format(
+        client.client_name, getpass.getuser(), client.client_hostname
+    )
     eventtype = "os.hid.input"
     client.create_bucket(bucket_name, eventtype, queued=False)
     poll_time = 5
